@@ -656,5 +656,37 @@ const products = [
       "apparel",
       "mens"
     ]
-  }
+  },
+  {
+    id: "id1",
+    image: "images/products/women-beach-sandals.jpg",
+    name: "Women beach Sandals",
+    rating: {
+      stars: 4.5,
+      count: 357
+    },
+    priceCents: 1200,
+    keywords: [
+      "sweaters",
+      "hoodies",
+      "apparel",
+      "mens"
+    ]
+  },
+  {
+    id: "id2",
+    image: "images/products/women-french-terry-fleece-jogger-camo.jpg",
+    name: "Women French Terry Fleece Jogger Camo",
+    rating: {
+      stars: 4.5,
+      count: 357
+    },
+    priceCents: 2900,
+    keywords: [
+      "sweaters",
+      "hoodies",
+      "apparel",
+      "mens"
+    ]
+  },
 ];

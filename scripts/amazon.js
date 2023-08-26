@@ -15,7 +15,7 @@ products.forEach((product)=>{
 
   <div class="product-rating-container">
     <img class="product-rating-stars"
-      src="images/ratings/rating-${product.rating.star*10}.png">
+      src="images/ratings/rating-${product.rating.stars*10}.png">
     <div class="product-rating-count link-primary">
       ${product.rating.count}
     </div>
@@ -26,7 +26,7 @@ products.forEach((product)=>{
   </div>
 
   <div class="product-quantity-container">
-    <select>
+    <select class="js-quanity-selector-${product.id}">
       <option selected value="1">1</option>
       <option value="2">2</option>
       <option value="3">3</option>
@@ -42,15 +42,63 @@ products.forEach((product)=>{
 
   <div class="product-spacer"></div>
 
-  <div class="added-to-cart">
+  <div class="added-to-cart js-${product.id}">
     <img src="images/icons/checkmark.png">
     Added
   </div>
 
-  <button class="add-to-cart-button button-primary">
+  <button class="add-to-cart-button button-primary
+  js-add-to-cart"
+  data-product-id="${product.id}">
     Add to Cart
   </button>
 </div>`;
 })
 
 document.querySelector('.products-grid').innerHTML=productsHTML
+
+document.querySelectorAll('.js-add-to-cart').forEach((button)=>{
+    button.addEventListener('click',()=>{
+    
+      const {productId} = button.dataset;
+      let matchingItem;
+      cart.forEach((item)=>{
+        if(productId===item.productId){
+             matchingItem = item;
+        }
+      })
+      const quanitySelector = document.querySelector(`.js-quanity-selector-${productId}`);
+      const quanity = Number(quanitySelector.value)
+      if(matchingItem){
+        matchingItem.quanity+=quanity;
+      }else{
+        cart.push({
+          productId,
+          quanity,
+        });
+      }
+    
+    let cartQuanity = 0;
+
+    cart.forEach((item)=>{
+       cartQuanity+= item.quanity;
+    })
+      document.querySelector('.cart-quantity').innerHTML=cartQuanity;
+
+
+
+      //Time out added
+      const showAdded = document.querySelector(`.js-${productId}`)
+      showAdded.classList.add('show-added')
+
+      let addMessageTimeoutid 
+      if( addMessageTimeoutid ){
+        clearTimeout(addMessageTimeoutid)
+      }
+
+      const timeoutId = setTimeout(()=>{
+        showAdded.remove('show-added')
+     },2000)
+     addMessageTimeoutid= timeoutId;
+    })
+});
